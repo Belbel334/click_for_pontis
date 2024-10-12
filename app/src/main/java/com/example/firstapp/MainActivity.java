@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     int pointperclick = 1;
     Button Mybutton;
     Button UpgradeButton;
+    ImageButton MenuButton;
     TextView Counter;
     TextView Errormessage;
 
@@ -38,40 +40,33 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Mybutton =  (Button) findViewById(R.id.button);
+        Mybutton = (Button) findViewById(R.id.button);
         UpgradeButton = (Button) findViewById(R.id.buybutton);
-        Counter = (TextView)findViewById(R.id.textView2);
+        Counter = (TextView) findViewById(R.id.textView2);
         Errormessage = (TextView) findViewById(R.id.Error);
-        //Counter.setText("me");
+        MenuButton = (ImageButton) findViewById(R.id.imageButton);
 
-        Mybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Points += pointperclick;
-                Counter.setText(String.valueOf(Points) + " pontis");
+        Mybutton.setOnClickListener(v -> {
+            Points += pointperclick;
+            Counter.setText(Points + " pontis");
+        });
+        UpgradeButton.setOnClickListener(v -> {
+            if (Points >= 25) {
+                Points -= 25;
+                pointperclick += 1;
+                Counter.setText(Points + " pontis");
+                UpgradeButton.setVisibility(View.INVISIBLE);
+            }
+            else {
+                Errormessage.setVisibility(View.VISIBLE);
+                Errormessage.setText("Error: " + "Not enough pontis");
+
+                new Handler(Looper.getMainLooper()).postDelayed(() -> Errormessage.setVisibility(View.INVISIBLE), 1000);
             }
         });
-        UpgradeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Points >= 25) {
-                    Points -= 25;
-                    pointperclick += 1;
-                    Counter.setText(String.valueOf(Points) + " pontis");
-                    UpgradeButton.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    Errormessage.setVisibility(View.VISIBLE);
-                    Errormessage.setText("Error: " + "Not enough pontis");
+        MenuButton.setOnClickListener(v -> {
 
-                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Errormessage.setVisibility(View.INVISIBLE);
-                        }
-                    }, 1000);
-                }
-            }
-        });
+        }
+        );
     }
 }
