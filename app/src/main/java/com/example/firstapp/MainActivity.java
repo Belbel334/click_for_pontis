@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     int pointperclick = 1;
     Button Mybutton;
     Button UpgradeButton;
-    ImageButton MenuButton;
     TextView Counter;
     TextView Errormessage;
 
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         UpgradeButton = (Button) findViewById(R.id.buybutton);
         Counter = (TextView) findViewById(R.id.textView2);
         Errormessage = (TextView) findViewById(R.id.Error);
-        MenuButton = (ImageButton) findViewById(R.id.imageButton);
 
         Mybutton.setOnClickListener(v -> {
             Points += pointperclick;
@@ -64,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 new Handler(Looper.getMainLooper()).postDelayed(() -> Errormessage.setVisibility(View.INVISIBLE), 1000);
             }
         });
-        MenuButton.setOnClickListener(v -> {
 
-        }
-        );
     }
 }
