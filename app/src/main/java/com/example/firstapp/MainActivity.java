@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     int pointperclick = 1;
     Button Mybutton;
     Button UpgradeButton;
+    ImageButton HomeButton;
+    ImageButton ProfileButton;
     TextView Counter;
     TextView Errormessage;
 
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         });
         Mybutton = (Button) findViewById(R.id.button);
         UpgradeButton = (Button) findViewById(R.id.buybutton);
+        HomeButton = (ImageButton) findViewById(R.id.imageButton2);
+        ProfileButton = (ImageButton) findViewById(R.id.imageButton3);
         Counter = (TextView) findViewById(R.id.textView2);
         Errormessage = (TextView) findViewById(R.id.Error);
 
@@ -62,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
                 new Handler(Looper.getMainLooper()).postDelayed(() -> Errormessage.setVisibility(View.INVISIBLE), 1000);
             }
         });
-
+        ProfileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            startActivity(intent);
+        }
+        );
     }
 }
