@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +17,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -49,9 +54,13 @@ public class MainActivity extends AppCompatActivity {
         Counter = (TextView) findViewById(R.id.textView2);
         Errormessage = (TextView) findViewById(R.id.Error);
 
+        Points = PointsFile("points.txt");
+        Counter.setText(Points + " pontis");
+
         Mybutton.setOnClickListener(v -> {
             Points += pointperclick;
             Counter.setText(Points + " pontis");
+            WriteFile("points.txt", Points);
         });
         UpgradeButton.setOnClickListener(v -> {
             if (Points >= 25) {
@@ -73,4 +82,33 @@ public class MainActivity extends AppCompatActivity {
         }
         );
     }
+    public int PointsFile(String name){
+        File Path = getApplicationContext().getFilesDir();
+        File readfrom = new File(Path, name);
+        byte[] readF = new byte[(int) readfrom.length()];
+        try{
+            FileInputStream stream = new FileInputStream(readfrom);
+
+            stream.read(readF);
+            int points = Integer.parseInt(new String(readF));
+            stream.close();
+            return points;
+        } catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+    public void WriteFile(String name, int points){
+        File Path = getApplicationContext().getFilesDir();
+        try {
+            FileOutputStream writer = new FileOutputStream(new File(Path, name));
+            writer.write(String.valueOf(points).getBytes());
+            writer.close();
+            //Toast.makeText(getApplicationContext(), "File saved", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
